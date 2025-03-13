@@ -1,0 +1,108 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  background-color: #ebebeb;
+  flex-grow: 1;
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 100px;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.login-image {
+  width: 45%;
+}
+
+.login-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 450px;
+}
+
+.login-form {
+  width: 45%;
+}
+
+.login-form h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.login-form p {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.forgot-password {
+  color: #7b61ff;
+  text-decoration: none;
+}
+
+.login-btn-main {
+  background-color: #7b61ff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.alternative-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alternative-login a {
+  color: #7b61ff;
+  text-decoration: none;
+}
+
+.social-icons-login {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons-login img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}

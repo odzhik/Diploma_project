@@ -1,12 +1,16 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http'; // ✅ Добавляем HttpClient
-import { routes } from './app/app.routes'; // ✅ Исправляем импорт (было appRoutes, а должно быть routes)
+import { provideHttpClient, withInterceptors } from '@angular/common/http'; // ✅ Подключаем HTTP-клиент
+import { routes } from './app/app.routes'; // ✅ Маршруты
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
+import { HttpClientModule } from '@angular/common/http'; // ✅ Добавляем HttpClientModule
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), // ✅ Теперь передаём правильное название
-    provideHttpClient() // ✅ HttpClient в провайдерах
+    provideRouter(routes), // ✅ Подключаем маршрутизацию
+    provideHttpClient(withInterceptors([AuthInterceptor])), // ✅ Подключаем HTTP-клиент с интерцептором
+    importProvidersFrom(HttpClientModule) // ✅ Импортируем HttpClientModule
   ]
 }).catch(err => console.error(err));

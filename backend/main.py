@@ -1,21 +1,37 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
-from .config import engine, Base, SessionLocal  # ✅ Импорт из config.py
+from backend.config import engine, Base, SessionLocal
 from backend import models, schemas, crud, auth
 from datetime import timedelta
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from backend.auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
+from backend.routers import users, events, tickets
+from backend.auth import get_current_user
+from backend.models import User
+from fastapi.middleware.cors import CORSMiddleware
+from backend.auth import router as auth_router  
+from pydantic import BaseModel
 
 # Создаем приложение FastAPI
 app = FastAPI()
 
+router = APIRouter()
+
 # Подключаем маршруты авторизации
-app.include_router(auth_router)
+
+app.include_router(auth_router, prefix="/auth")
 # Создаем таблицы (если их нет)
 Base.metadata.create_all(bind=engine)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+app.include_router(auth_router, prefix="/auth")
+app.include_router(users.router)
+app.include_router(events.router)
+print("Маршрут /tickets загружается...")
+app.include_router(tickets.router)
+
 
 # Функция для получения сессии БД
 def get_db():
@@ -135,3 +151,45 @@ app.add_middleware(
     allow_methods=["*"],  # Разрешаем все методы (GET, POST и т. д.)
     allow_headers=["*"],  # Разрешаем все заголовки
 )
+
+@router.get("/users/me")
+def get_current_user_data(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/events")
+async def get_events():
+    return [
+        {"id": 1, "title": "Концерт Imagine Dragons", "description": "Большой концерт в Алматы", "date": "2025-04-15"},
+        {"id": 2, "title": "Фестиваль технологий", "description": "IT-конференция в Астане", "date": "2025-05-20"}
+    ]
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+    
+
+@app.post("/login")
+def login(request: LoginRequest):
+    return {"access_token": "example_token"}
+
+@app.get("/profile", response_model=schemas.UserOut)
+def get_profile(current_user: models.User = Depends(get_current_user)):
+    return current_user
+
+
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+

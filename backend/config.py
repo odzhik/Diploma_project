@@ -9,6 +9,11 @@ DB_HOST = "localhost"
 DB_PORT = "5432"
 DB_NAME = "event_platform"
 
+SECRET_KEY = "supersecretkey"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
+
 # 🔹 Формируем строку подключения
 SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

@@ -1,1 +1,22 @@
-<p>home works!</p>
+<div class="carousel-container">
+  <button class="arrow left" (click)="prevSlide()">&#9664;</button>
+  <div class="carousel" [ngStyle]="{'transform': 'translateX(' + offset + 'px)'}">
+    <div class="carousel-item" *ngFor="let item of items">
+      <img [src]="item.img" alt="Event Image">
+    </div>
+  </div>
+  <button class="arrow right" (click)="nextSlide()">&#9654;</button>
+
+  <div class="indicators">
+    <span *ngFor="let item of items; let i = index" 
+          [class.active]="i === currentIndex" 
+          (click)="goToSlide(i)">
+    </span>
+  </div>
+</div>
+
+<section class="cashback-section">   <!-- Cashback section -->
+  <img src="images/cashback.png" alt="Cashback" class="cashback-image">
+</section>
+
+<!-- <router-outlet></router-outlet> -->

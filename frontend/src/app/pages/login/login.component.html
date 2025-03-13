@@ -1,18 +1,44 @@
-<p>login works!</p>
-<mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email">
-      </mat-form-field>
+<app-header></app-header>
+
+<div class="login-page">
+  <section class="login-container">
+    <div class="login-image">
+      <img src="images/login-illustration.png" alt="Login Illustration">
+    </div>
+
+    <div class="login-form">
+      <h1>Login</h1>
+      <p>Login to your account in seconds</p>
+
+      <form (submit)="login()">
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Email Address" required />
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+        <button type="submit" class="login-btn-main">Log In</button>
+    
       
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password">
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary">Login</button>
-    </mat-card-content>
-  </mat-card>
-  
+
+        <div class="login-options">
+          <div class="checkbox-container">
+            <input type="checkbox" id="keep-logged-in" />
+            <label for="keep-logged-in">Keep me logged in</label>
+          </div>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+
+        
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+
+      <div class="alternative-login">
+        <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
+        <p>Or continue with:</p>
+        <div class="social-icons-login">
+          <img src="images/google-icon.png" alt="Google">
+          <img src="images/facebook-icon.webp" alt="Facebook">
+          <img src="images/instagram-icon.jpg" alt="Instagram">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
