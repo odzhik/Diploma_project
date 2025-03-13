@@ -6,6 +6,7 @@
   overflow: hidden;
   margin-top: 20px;
   border-radius: 10px;
+  height: 400px;
 }
 
 .carousel {
@@ -92,19 +93,139 @@
 
 /* Секция Cashback */
 /* Секция Cashback */
-.cashback-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  background-color: #fff;
+// .cashback-section {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 40px 20px;
+//   background-color: #fff;
+// }
+
+// .cashback-image {
+//   width: 100%; /* Занимает всю ширину секции */
+//   max-width: 1200px; /* Ограничиваем максимальную ширину */
+//   height: 350px; /* Поддерживаем пропорции изображения */
+//   border-radius: 15px; /* Лёгкое закругление углов */
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
+//   object-fit: cover; /* Убедимся, что изображение корректно вписывается */
+  
+// }
+
+
+// Карточка события
+.event-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.cashback-image {
-  width: 100%; /* Занимает всю ширину секции */
-  max-width: 1200px; /* Ограничиваем максимальную ширину */
-  height: 400px; /* Поддерживаем пропорции изображения */
-  border-radius: 15px; /* Лёгкое закругление углов */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
-  object-fit: cover; /* Убедимся, что изображение корректно вписывается */
+.event-card a {
+  color: blue;
+  text-decoration: none;
+}
+
+.event-card a:hover {
+  text-decoration: underline;
+}
+
+// Фильтры категорий
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  button {
+    background-color: white;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+   
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+}
+
+// Фильтр по датам
+.date-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+
+  button {
+    background-color: white;
+    border: 2px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &.active {
+      background-color: #e7e7ff;
+      color: #4b50f7;
+      border-color: #4b50f7;
+      font-weight: bold;
+    }
+  }
+}
+
+// Заголовок
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+// Карточки событий
+.event-cards {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+
+  .event-card {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 10px 15px;
+    }
+
+    p {
+      color: gray;
+      margin: 0 15px 5px;
+      font-size: 14px;
+    }
+
+    span {
+      display: block;
+      text-align: center;
+      margin: 10px 15px 15px;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      background-color: #ffdddd;
+      color: #d90000;
+
+      &.free {
+        background-color: #e7ffe7;
+        color: #009900;
+      }
+    }
+  }
 }

@@ -165,12 +165,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/events")
-async def get_events():
-    return [
-        {"id": 1, "title": "Концерт Imagine Dragons", "description": "Большой концерт в Алматы", "date": "2025-04-15"},
-        {"id": 2, "title": "Фестиваль технологий", "description": "IT-конференция в Астане", "date": "2025-05-20"}
-    ]
+
 
 class LoginRequest(BaseModel):
     email: str

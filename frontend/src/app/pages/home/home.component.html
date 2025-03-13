@@ -1,22 +1,63 @@
 <div class="carousel-container">
+  <!-- Левая стрелка -->
   <button class="arrow left" (click)="prevSlide()">&#9664;</button>
-  <div class="carousel" [ngStyle]="{'transform': 'translateX(' + offset + 'px)'}">
-    <div class="carousel-item" *ngFor="let item of items">
-      <img [src]="item.img" alt="Event Image">
+
+  <!-- Основная карусель -->
+  <div class="carousel" [ngStyle]="{'transform': 'translateX(' + carouselOffset + 'px)'}">
+    <div class="carousel-item" *ngFor="let event of carouselEvents">
+      <img [src]="event.image" alt="Event Image">
     </div>
   </div>
+
+  <!-- Правая стрелка -->
   <button class="arrow right" (click)="nextSlide()">&#9654;</button>
 
+  <!-- Индикаторы под каруселью -->
   <div class="indicators">
-    <span *ngFor="let item of items; let i = index" 
-          [class.active]="i === currentIndex" 
+    <span *ngFor="let item of carouselEvents; let i = index" 
+          [class.active]="i === currentSlideIndex" 
           (click)="goToSlide(i)">
     </span>
   </div>
 </div>
 
-<section class="cashback-section">   <!-- Cashback section -->
+<!-- Категории фильтров -->
+<div class="filter-buttons">
+  <button (click)="filterEvents('movies')">🎬 Фильмы</button>
+  <button (click)="filterEvents('concerts')">🎵 Концерты</button>
+  <button (click)="filterEvents('sport')">⚽️ Спорт</button>
+  <button (click)="filterEvents('entertainment')">🎡 Развлечения</button>
+  <button (click)="filterEvents('other')">🔵 Другие</button>
+</div>
+
+<!-- Фильтры по датам -->
+<div class="date-filter">
+  <button class="active">Today</button>
+  <button>Tomorrow</button>
+  <button>Weekends</button>
+  <button>Choose date</button>
+</div>
+
+<!-- Заголовок секции -->
+<h2>Events in Almaty</h2>
+
+<!-- Карточки событий -->
+<div class="event-cards">
+  <div class="event-card" *ngFor="let event of filteredEvents">
+    <img [src]="event.image" alt="Event Image">
+    <h3>{{ event.name }}</h3>
+    <p>{{ event.date }}</p>
+    <p>{{ event.location }}</p>
+    <span [class.free]="event.price === 'Free'">
+      {{ event.price === 'Free' ? 'Free' : 'From ' + event.price + '$' }}
+    </span>
+  </div>
+</div>
+
+
+<!-- Cashback section -->
+<!-- <section class="cashback-section">   
   <img src="images/cashback.png" alt="Cashback" class="cashback-image">
-</section>
+</section> -->
 
 <!-- <router-outlet></router-outlet> -->
