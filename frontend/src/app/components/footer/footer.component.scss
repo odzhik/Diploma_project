@@ -1,121 +1,182 @@
-// .footer {
-//     background-color: #0d0736; /* Темно-синий фон */
-//     color: white;
-//     padding: 40px 0;
-//     text-align: center;
-//     width: 100%;
-//     position: relative; /* Теперь он не зафиксирован */
-// }
+/* Общие стили */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
 
-// .footer-content {
-//     max-width: 1200px;
-//     margin: 0 auto;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     flex-wrap: wrap;
-// }
-
-// .footer nav {
-//     display: flex;
-//     gap: 15px;
-// }
-
-// .footer a {
-//     color: white;
-//     text-decoration: none;
-//     font-weight: 500;
-// }
-
-// .footer a:hover {
-//     text-decoration: underline;
-// }
-
-// /* Социальные иконки */
-// .footer .social-icons {
-//     display: flex;
-//     gap: 10px;
-// }
-
-// .footer .social-icons img {
-//     width: 30px; /* Размер иконок */
-//     height: 30px;
-//     cursor: pointer;
-// }
-
-// .footer .app-links img {
-//     width: 150px; /* Ширина (можешь изменить) */
-//     height: auto; /* Автоматическая высота */
-//     max-width: 100%; /* Чтобы не выходило за границы */
-//     display: block; /* Убираем лишний отступ */
-//     margin: 10px auto; /* Центрируем */
-// }
-
+/* Стили футера */
 .footer {
     background-color: #150050;
     color: white;
-    padding: 20px;
-    margin-top: auto;
-  }
-  
-  .footer-container {
+    padding: 40px 60px;
+}
+
+/* Контейнер футера */
+.footer-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     align-items: flex-start;
-  }
-  
-  .footer-left .app-links img {
-    width: 120px;
+    flex-wrap: wrap;
+}
+
+/* Левая часть футера */
+.footer-left {
+  display: flex;
+  flex-direction: row; /* Меняем на горизонтальное расположение */
+  align-items: center; /* Выравниваем по центру */
+  gap: 64px; /* Расстояние между логотипом и кнопками */
+  max-width: 100%;
+}
+
+/* Логотип */
+.footer-left .logo {
+  display: flex;
+  align-items: center;
+}
+.footer-top {
+  display: flex;
+  align-items: center; /* Логотип и кнопки в одной линии */
+  gap: 20px;
+}
+.footer-left img {
+    max-width: 80px;
     height: auto;
-    margin-right: 10px;
-  }
-  
-  .footer-left p {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-  
-  .footer-right {
+    
+}
+
+/* Кнопки магазинов */
+.app-links {
+  display: flex;
+  gap: 15px; /* Увеличил расстояние между кнопками */
+}
+
+.app-links img {
+  width: 150px; /* Увеличил ширину */
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.app-links img:hover {
+  transform: scale(1.1);
+}
+
+.footer-bottom-text {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 10px; /* Добавляем отступ сверху */
+}
+
+/* Правая часть футера */
+.footer-right {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .footer-right ul {
+    justify-content: space-between;
+    width: 50%;
+    gap: 40px;
+}
+
+.info-block, .contact-block {
+    flex: 1;
+}
+
+.info-block ul {
     list-style: none;
     padding: 0;
-  }
-  
-  .footer-right ul li {
-    margin-bottom: 5px;
-  }
-  
-  .footer-right a {
+}
+
+.info-block li {
+    margin-bottom: 8px;
+}
+
+.info-block a {
     color: white;
     text-decoration: none;
-  }
-  
-  .footer-right h4 {
-    margin: 0;
-    font-size: 14px;
-  }
-  
-  .footer-bottom {
+    font-size: 13px;
+    opacity: 0.8;
+    transition: 0.3s ease;
+}
+
+.info-block a:hover {
+    color: #FDCB58;
+    opacity: 1;
+}
+
+/* Контакты */
+.contact-block h4 {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.contact-block p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin: 5px 0;
+}
+
+.contact-block a {
+    color: #FDCB58;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Разделительная линия */
+hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
+}
+
+/* Нижняя часть футера */
+.footer-bottom {
     text-align: center;
-    margin-top: 10px;
     font-size: 12px;
-  }
-  
-  .social-icons {
+    opacity: 0.6;
+}
+
+/* Соцсети */
+.social-icons {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
-    gap: 10px;
-  }
-  
-  .social-icons img {
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icons img {
     width: 32px;
     height: 32px;
     cursor: pointer;
-  }
+    transition: 0.3s;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* 📱 Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-right {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .info-block, .contact-block {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .social-icons {
+        flex-wrap: wrap;
+    }
+}

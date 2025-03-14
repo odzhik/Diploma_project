@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // Добавляем Router для перенаправления
-import { AuthService } from '../../services/auth.service'; // Указываем корректный путь к сервису
+import { Router } from '@angular/router'; // Роутер для перенаправления
+import { AuthService } from '../../services/auth.service'; // Сервис авторизации
 
 @Component({
   selector: 'app-register',
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule] // ОБЯЗАТЕЛЬНО добавляем сюда FormsModule
 })
 export class RegisterComponent {
   username: string = '';
@@ -19,7 +19,7 @@ export class RegisterComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {} // Инжектим сервис и роутер
+  constructor(private authService: AuthService, private router: Router) {}
 
   register(event: Event) {
     event.preventDefault();
@@ -38,7 +38,7 @@ export class RegisterComponent {
       next: () => {
         this.successMessage = 'Регистрация успешна! Перенаправление...';
         this.errorMessage = '';
-        setTimeout(() => this.router.navigate(['/login']), 2000); // Перенаправляем на страницу входа
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Ошибка регистрации';

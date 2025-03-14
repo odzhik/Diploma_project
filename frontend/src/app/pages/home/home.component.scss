@@ -4,9 +4,10 @@
   margin: auto;
   position: relative;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 32px;
   border-radius: 10px;
   height: 400px;
+  margin-bottom: 32px;
 }
 
 .carousel {
@@ -93,23 +94,24 @@
 
 /* Секция Cashback */
 /* Секция Cashback */
-// .cashback-section {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 40px 20px;
-//   background-color: #fff;
-// }
+ .cashback-section {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 40px 20px;
+   background-color: #fff;
+ }
 
-// .cashback-image {
-//   width: 100%; /* Занимает всю ширину секции */
-//   max-width: 1200px; /* Ограничиваем максимальную ширину */
-//   height: 350px; /* Поддерживаем пропорции изображения */
-//   border-radius: 15px; /* Лёгкое закругление углов */
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для эффекта */
-//   object-fit: cover; /* Убедимся, что изображение корректно вписывается */
-  
-// }
+ .cashback-image {
+  width: 80%;
+  height: auto;
+  max-height: 250px; /* Ограничиваем высоту, чтобы не было слишком большим */
+  object-fit: cover; /* Заполняет всю доступную область без искажений */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 
 
 // Карточка события
@@ -131,53 +133,44 @@
 }
 
 // Фильтры категорий
-.filter-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+.filter-buttons button {
+  background-color: white;
+  border: 2px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px 10px; /* Увеличенный отступ */
+}
 
-  button {
-    background-color: white;
-    border: 2px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-size: 14px;
-   
-    &:hover {
-      background-color: #f2f2f2;
-    }
-  }
+.filter-buttons button:hover {
+  background-color: #f2f2f2;
 }
 
 // Фильтр по датам
-.date-filter {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
-
-  button {
-    background-color: white;
-    border: 2px solid #e5e5e5;
-    border-radius: 20px;
-    padding: 8px 20px;
-    cursor: pointer;
-    font-size: 14px;
-
-    &.active {
-      background-color: #e7e7ff;
-      color: #4b50f7;
-      border-color: #4b50f7;
-      font-weight: bold;
-    }
-  }
+.date-filter button {
+  background-color: white;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px 12px; /* Увеличенный отступ */
 }
+
+.date-filter button.active {
+  background-color: #e7e7ff;
+  color: #4b50f7;
+  border-color: #4b50f7;
+  font-weight: bold;
+}
+
 
 // Заголовок
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
+// h2 {
+//   font-size: 24px;
+//   margin-bottom: 20px;
+// }
 
 // Карточки событий
 .event-filters {
@@ -198,6 +191,27 @@ h2 {
       background-color: #00796b;
     }
   }
+}
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #009688; /* Цвет заголовка */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+/* Добавляем линию под заголовком */
+h2::after {
+  content: "";
+  display: block;
+  width: 80px; /* Сделали шире */
+  height: 6px; /* Сделали толще */
+  background-color: #009688;
+  margin: 10px auto 0;
+  border-radius: 3px;
 }
 
 .events-grid {
@@ -243,4 +257,5 @@ h2 {
       text-align: center;
     }
   }
+  
 }

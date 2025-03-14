@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule],
 })
 export class LoginComponent {
   email: string = '';
