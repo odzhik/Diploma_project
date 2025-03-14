@@ -1,0 +1,27 @@
+<div class="event-detail-container">
+    <div class="event-card">
+      <img [src]="event.image" alt="Event Image">
+      <h1>{{ event.name }}</h1>
+      <p>📅 Дата: <span>{{ event.date }}</span></p>
+      <p>📍 Локация: <span>{{ event.location }}</span></p>
+      <p>💵 Цена: <span class="price">{{ event.price }} ₸</span></p>
+  
+      <button class="buy-btn">🎟️ Купить билет</button>
+      <button (click)="goBack()" class="back-btn">⬅️ Назад</button>
+  
+      <!-- Форма для добавления отзыва -->
+      <!-- <div class="review-form">
+        <input type="text" [(ngModel)]="newReview" placeholder="Оставьте свой отзыв..." />
+        <button (click)="addReview()">Добавить отзыв</button>
+      </div> -->
+  
+      <!-- Блок с отзывами -->
+      <!-- <div class="reviews">
+        <h3>Отзывы:</h3>
+        <ul>
+          <li *ngFor="let review of reviews">{{ review }}</li>
+        </ul>
+      </div>
+    </div> -->
+  </div>
+  

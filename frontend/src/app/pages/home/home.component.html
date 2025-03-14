@@ -42,17 +42,31 @@
 <h2>Events in Almaty</h2>
 
 <!-- Карточки событий -->
-<div class="event-cards">
-  <div class="event-card" *ngFor="let event of filteredEvents">
+<div class="event-filters">
+  <button (click)="filterEvents('all')">Все события</button>
+  <button (click)="filterEvents('concerts')">Концерты</button>
+  <button (click)="filterEvents('movies')">Фильмы</button>
+  <button (click)="filterEvents('sport')">Спорт</button>
+  <button (click)="filterEvents('entertainment')">Развлечения</button>
+  <button (click)="filterEvents('other')">Другое</button>
+</div>
+
+<div class="events-grid">
+  <div 
+    class="event-card" 
+    *ngFor="let event of filteredEvents" 
+    (click)="goToEventPage(event)">
+    
     <img [src]="event.image" alt="Event Image">
     <h3>{{ event.name }}</h3>
-    <p>{{ event.date }}</p>
-    <p>{{ event.location }}</p>
-    <span [class.free]="event.price === 'Free'">
-      {{ event.price === 'Free' ? 'Free' : 'From ' + event.price + '$' }}
-    </span>
+    <p>{{ event.date }} - {{ event.location }}</p>
+    <span>{{ event.price }}$</span>
   </div>
+  
 </div>
+
+
+
 
 
 <!-- Cashback section -->

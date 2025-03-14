@@ -6,7 +6,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http'; // �
 import { routes } from './app/app.routes'; // ✅ Маршруты
 import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http'; // ✅ Добавляем HttpClientModule
-
+import { HomeComponent } from './app/pages/home/home.component';
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes), // ✅ Подключаем маршрутизацию
