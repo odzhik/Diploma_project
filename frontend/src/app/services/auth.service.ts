@@ -23,11 +23,11 @@ export class AuthService {
 
   // Логин пользователя
   login(email: string, password: string) {
-    return this.http.post<{ access_token: string }>(`${this.apiUrl}/login`, { email, password })
+    return this.http.post<{ access_token: string; refresh_token?: string }>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap((response) => {
           if (response.access_token) {
-            localStorage.setItem('access_token', response.access_token);
+            this.saveToken(response.access_token, response.refresh_token);
           }
         }),
         catchError((error) => {
@@ -36,8 +36,6 @@ export class AuthService {
         })
       );
   }
-  
-  
 
   // Сохранение токенов в localStorage
   public saveToken(accessToken: string, refreshToken?: string) {
@@ -47,7 +45,6 @@ export class AuthService {
       localStorage.setItem('refresh_token', refreshToken);
     }
   }
-  
 
   // Получение токенов
   getAccessToken(): string | null {
@@ -108,7 +105,7 @@ export class AuthService {
     window.location.href = '/login';
   }
 
-  // ✅ Добавляем метод для получения токена
+  // Получение токена
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
@@ -126,13 +123,8 @@ export class AuthService {
       return null;
     }
   }
-  getProfile(): Observable<any> {
-    const token = localStorage.getItem('access_token'); // Берём токен из LocalStorage
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-    return this.http.get('http://localhost:8000/profile', { headers });
-  }
-  
 
-  
+  getProfile(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/profile`, { headers: this.getAuthHeaders() });
+  }
 }

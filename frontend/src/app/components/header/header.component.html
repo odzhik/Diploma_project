@@ -20,8 +20,9 @@
     <!-- Авторизация -->
     <div class="auth-section">
       <span class="language">🌍 English</span>
-      <a href="/login" class="login-btn">Login</a>
-      <a href="/register" class="signup-btn">Sign Up</a>
+      <a *ngIf="!isAuthenticated" href="/login" class="login-btn">Login</a>
+      <a *ngIf="!isAuthenticated" href="/register" class="signup-btn">Sign Up</a>
+      <button *ngIf="isAuthenticated" (click)="logout()" class="logout-btn">Logout</button>
     </div>
   </div>
 </header>
