@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { InterestSelectorComponent } from '../../components/interest-selector/interest-selector.component'; // Указываем путь к компоненту
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [CommonModule, RouterModule, FormsModule, BsDatepickerModule]
+  imports: [CommonModule, RouterModule, FormsModule, BsDatepickerModule, InterestSelectorComponent] // Добавляем InterestSelectorComponent в imports
   
 })
 export class HomeComponent implements OnInit, OnDestroy {
