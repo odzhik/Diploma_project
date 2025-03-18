@@ -6,8 +6,9 @@
       <p>📍 Локация: <span>{{ event.location }}</span></p>
       <p>💵 Цена: <span class="price">{{ event.price }} ₸</span></p>
   
-      <button class="buy-btn">🎟️ Купить билет</button>
-      <button (click)="goBack()" class="back-btn">⬅️ Назад</button>
+      <button (click)="buyTicket()" class="buy-btn">🎟️ Купить билет</button>
+<button (click)="goBack()" class="back-btn">⬅️ Назад</button>
+
   
       <!-- Форма для добавления отзыва -->
       <!-- <div class="review-form">

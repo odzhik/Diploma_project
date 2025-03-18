@@ -193,8 +193,16 @@ def get_profile(current_user: User = Depends(get_current_user)):
         "email": current_user.email,
         "name": current_user.username
     }
+class TicketRequest(BaseModel):
+    user_id: int
+    event_id: int
 
+@app.post("/buy_ticket")
+async def buy_ticket(request: TicketRequest):
+    if not request.user_id or not request.event_id:
+        raise HTTPException(status_code=400, detail="Не все данные переданы!")
+    
+    return {"message": f"Билет на событие {request.event_id} куплен пользователем {request.user_id}"}
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
-
