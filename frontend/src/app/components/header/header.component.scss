@@ -149,3 +149,32 @@
     outline: none;
   }
   
+    
+  .auth-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  
+    .profile-icon {
+      width: 40px; // Размер круга
+      height: 40px;
+      border-radius: 50%;
+      background-color: #009688; // Цвет круга (можно поменять)
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+  
+      &:hover {
+        background-color: #035850; // Темнее при наведении
+      }
+  
+      img {
+        width: 24px; // Размер иконки
+        height: 24px;
+      }
+    }
+  }
+  
+  

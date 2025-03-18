@@ -20,9 +20,13 @@
     <!-- Авторизация -->
     <div class="auth-section">
       <span class="language">🌍 English</span>
-      <a *ngIf="!isAuthenticated" href="/login" class="login-btn">Login</a>
-      <a *ngIf="!isAuthenticated" href="/register" class="signup-btn">Sign Up</a>
-      <button *ngIf="isAuthenticated" (click)="logout()" class="logout-btn">Logout</button>
+      <a *ngIf="!isAuthenticated" routerLink="/login" class="login-btn">Login</a>
+      <a *ngIf="!isAuthenticated" routerLink="/register" class="signup-btn">Sign Up</a>
+
+      <!-- Профиль вместо logout -->
+      <a *ngIf="isAuthenticated" routerLink="/profile" class="profile-icon">
+        <img src="images/user.png" alt="Profile" />
+      </a>
     </div>
   </div>
 </header>

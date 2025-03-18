@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, EMPTY } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -9,7 +9,15 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/auth'; // Адрес API бэкенда
 
+  private authState = new BehaviorSubject<boolean>(this.hasToken());
+  authState$ = this.authState.asObservable(); // Поток для подписки на изменения состояния
+
   constructor(private http: HttpClient) {}
+
+  // Проверяет, есть ли токен в localStorage
+  private hasToken(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
 
   // Регистрация пользователя
   register(username: string, email: string, password: string): Observable<any> {
@@ -22,12 +30,13 @@ export class AuthService {
   }
 
   // Логин пользователя
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<any> {
     return this.http.post<{ access_token: string; refresh_token?: string }>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap((response) => {
           if (response.access_token) {
             this.saveToken(response.access_token, response.refresh_token);
+            this.authState.next(true); // Уведомляем подписчиков об изменении состояния авторизации
           }
         }),
         catchError((error) => {
@@ -44,24 +53,26 @@ export class AuthService {
     if (refreshToken) {
       localStorage.setItem('refresh_token', refreshToken);
     }
+    this.authState.next(true); // Обновляем состояние аутентификации
   }
 
-  // Получение токенов
+  // Получение access токена
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }
 
+  // Получение refresh токена
   getRefreshToken(): string | null {
     return localStorage.getItem('refresh_token');
   }
 
-  // Проверка аутентификации
+  // Проверка, аутентифицирован ли пользователь
   isAuthenticated(): boolean {
-    return !!this.getAccessToken();
+    return this.authState.value;
   }
 
   // Получение заголовков с токеном
-  private getAuthHeaders(): HttpHeaders {
+  public getAuthHeaders(): HttpHeaders {
     const token = this.getAccessToken();
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -85,7 +96,10 @@ export class AuthService {
   // Обновление access_token по refresh_token
   refreshToken(): Observable<any> {
     const refreshToken = this.getRefreshToken();
-    if (!refreshToken) return throwError(() => new Error('No refresh token'));
+    if (!refreshToken) {
+      console.warn('No refresh token found');
+      return EMPTY;
+    }
 
     return this.http.post<any>(`${this.apiUrl}/refresh`, { refresh_token: refreshToken }).pipe(
       tap(response => {
@@ -102,14 +116,11 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    this.authState.next(false); // Сообщаем подписчикам, что пользователь вышел
     window.location.href = '/login';
   }
 
-  // Получение токена
-  getToken(): string | null {
-    return localStorage.getItem('access_token');
-  }
-
+  // Получение данных пользователя из localStorage
   getUserData() {
     const userData = localStorage.getItem('user');
     if (!userData) {
@@ -124,6 +135,7 @@ export class AuthService {
     }
   }
 
+  // Запрос профиля пользователя
   getProfile(): Observable<any> {
     return this.http.get(`${this.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
