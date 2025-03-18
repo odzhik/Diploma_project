@@ -12,27 +12,41 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class EventDetailComponent implements OnInit {
   event: any;
-  userId: number = 12; // Заглушка, позже заменим на реального пользователя
-
-  allEvents = [
-    { id: 1, image: '/images/event1.jpg', name: 'Concert in Almaty', date: 'March 15', location: 'Republic Palace', price: 30, category: 'concerts' },
-    { id: 2, image: '/images/event2.jpg', name: 'Movie Night', date: 'March 16', location: 'Esentai Mall', price: 'Free', category: 'movies' },
-    { id: 3, image: '/images/event3.jpg', name: 'Football Match', date: 'March 18', location: 'Central Stadium', price: 15, category: 'sport' },
-    { id: 4, image: '/images/event4.jpg', name: 'Comedy Show', date: 'March 20', location: 'Theatre', price: 25, category: 'entertainment' },
-    { id: 5, image: '/images/event5.jpg', name: 'Art Exhibition', date: 'March 22', location: 'Kasteyev Museum', price: 10, category: 'other' }
-  ];
+  userId: number = 12; // Заглушка
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     const eventId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('Event ID:', eventId);
-    this.event = this.allEvents.find(event => event.id === eventId);
+    
+    // Получаем данные о событии с сервера
+    this.http.get(`http://127.0.0.1:8000/events/${eventId}`).subscribe({
+      next: (response) => {
+        this.event = response;
+        console.log('Данные о событии:', this.event);
+      },
+      error: (error) => {
+        console.error('Ошибка загрузки события:', error);
+      }
+    });
   }
 
+  successMessage: string = '';
+
   buyTicket() {
-    if (!this.event) {
-      console.error("Мероприятие не найдено!");
+    if (this.event.available_tickets > 0) {
+      this.event.available_tickets--;
+      this.successMessage = '✅ Билет успешно куплен!';
+      
+      // Очистка сообщения через 5 секунд
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 5000);
+    }
+  
+
+    if (this.event.available_tickets <= 0) {
+      alert('❌ Билеты закончились!');
       return;
     }
 
@@ -48,6 +62,9 @@ export class EventDetailComponent implements OnInit {
       next: (response) => {
         console.log('Билет куплен:', response);
         alert('✅ Билет успешно куплен!');
+        
+        // Обновляем количество билетов на UI
+        this.event.available_tickets -= 1;
       },
       error: (error) => {
         console.error('Ошибка при покупке билета:', error);

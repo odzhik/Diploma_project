@@ -44,7 +44,9 @@ class EventOut(BaseModel):
     location: str
     date: datetime
     price: int
-
+    category: str  # Добавляем категорию
+    available_tickets: int  # Добавляем количество доступных билетов
+    total_tickets: int 
     class Config:
         from_attributes = True
 

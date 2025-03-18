@@ -14,6 +14,7 @@ from backend.auth import router as auth_router
 from pydantic import BaseModel
 from backend.models import User  # Убедись, что модель User импортирована
 from backend.auth import get_current_user  # Функция для аутентификации
+import psycopg2
 # Создаем приложение FastAPI
 app = FastAPI()
 
@@ -193,15 +194,42 @@ def get_profile(current_user: User = Depends(get_current_user)):
         "email": current_user.email,
         "name": current_user.username
     }
+ # Покупка билета
+conn = psycopg2.connect(
+    dbname="event_platform",
+    user="postgres",
+    password="1234",
+    host="localhost",
+    port="5432"
+)
+cursor = conn.cursor()
 class TicketRequest(BaseModel):
     user_id: int
     event_id: int
 
 @app.post("/buy_ticket")
 async def buy_ticket(request: TicketRequest):
-    if not request.user_id or not request.event_id:
-        raise HTTPException(status_code=400, detail="Не все данные переданы!")
+    # Проверяем, есть ли билеты в наличии
+    cursor.execute("SELECT available_tickets FROM events WHERE id = %s", (request.event_id,))
+    result = cursor.fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Событие не найдено!")
+
+    available_tickets = result[0]
+
+    if available_tickets <= 0:
+        raise HTTPException(status_code=400, detail="Билеты закончились!")
+
+    # Обновляем количество билетов
+    cursor.execute(
+        "UPDATE events SET available_tickets = available_tickets - 1 WHERE id = %s",
+        (request.event_id,)
+    )
+    conn.commit()
+
     
+
     return {"message": f"Билет на событие {request.event_id} куплен пользователем {request.user_id}"}
 if __name__ == "__main__":
     import uvicorn

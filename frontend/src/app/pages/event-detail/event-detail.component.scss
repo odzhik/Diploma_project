@@ -1,104 +1,108 @@
-body {
-    background: linear-gradient(135deg, #f3f4f6, #e3e8f0);
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
+/* Основной контейнер */
+.event-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Заголовок */
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+/* Дата, локация, цена */
+p {
+  font-size: 18px;
+  color: #444;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Кнопки */
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin: 10px 5px;
+}
+
+.btn-primary {
+  background: #ff6600;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #cc5500;
+}
+
+.btn-secondary {
+  background: #ddd;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #bbb;
+}
+
+/* Оповещение о билетах */
+.sold-out {
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  margin-top: 15px;
+}
+
+/* Билеты */
+.event-tickets {
+  font-size: 20px;
+  font-weight: bold;
+  color: #222;
+  margin: 15px 0;
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 600px) {
+  .event-container {
+      width: 90%;
   }
-  
-  .event-detail-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .event-card {
-    background-color: white;
-    border-radius: 20px;
-    padding: 30px 40px;
-    max-width: 700px;
-    width: 90%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px;
-    margin-bottom: 20px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-  
+
   p {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+      flex-direction: column;
+      gap: 5px;
   }
-  
-  .price {
-    color: #e63946;
-    font-weight: bold;
+
+  button {
+      width: 100%;
   }
-  
-  .buy-btn, .back-btn {
-    background-color: #1976d2;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    margin: 10px 5px;
+}
+.success-message {
+  font-size: 18px;
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
-  .buy-btn:hover, .back-btn:hover {
-    background-color: #125cae;
+  to {
+      opacity: 1;
   }
-  
-  /* Секция отзывов */
-  .reviews {
-    margin-top: 30px;
-  }
-  
-  .reviews ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .reviews li {
-    background-color: #f1f1f1;
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  
-  /* Форма для добавления отзыва */
-  .review-form {
-    margin-top: 20px;
-  }
-  
-  input {
-    width: 70%;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-  }
-  
-  .review-form button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .review-form button:hover {
-    background-color: #45a049;
-  }
-  
+}

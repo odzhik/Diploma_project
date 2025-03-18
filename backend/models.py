@@ -26,7 +26,9 @@ class Event(Base):
     location = Column(String, nullable=False)
     date = Column(DateTime, nullable=False)
     price = Column(Integer, nullable=False)
-
+    category = Column(String, nullable=True)  # Категория
+    available_tickets = Column(Integer, nullable=False)  # Доступные билеты
+    total_tickets = Column(Integer, nullable=False)
     tickets = relationship("Ticket", back_populates="event")
 
 # Таблица билетов

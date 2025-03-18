@@ -1,15 +1,23 @@
-<div class="event-detail-container">
-    <div class="event-card">
-      <img [src]="event.image" alt="Event Image">
-      <h1>{{ event.name }}</h1>
-      <p>📅 Дата: <span>{{ event.date }}</span></p>
-      <p>📍 Локация: <span>{{ event.location }}</span></p>
-      <p>💵 Цена: <span class="price">{{ event.price }} ₸</span></p>
-  
-      <button (click)="buyTicket()" class="buy-btn">🎟️ Купить билет</button>
-<button (click)="goBack()" class="back-btn">⬅️ Назад</button>
+<div *ngIf="event" class="event-container">
+  <h1>{{ event.name }}</h1>
 
-  
+  <p>📅 Дата: {{ event.date }}</p>
+  <p>📍 Локация: {{ event.location }}</p>
+  <p>💰 Цена: {{ event.price === 0 ? 'Бесплатно' : event.price + ' KZT' }}</p>
+  <p class="event-tickets">🎟️ Билетов осталось: <strong>{{ event.available_tickets }}</strong> / {{ event.total_tickets }}</p>
+
+  <!-- Сообщение об успешной покупке -->
+  <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+
+  <button (click)="buyTicket()" [disabled]="event.available_tickets === 0" class="btn btn-primary">
+    Купить билет
+  </button>
+  <button (click)="goBack()" class="btn btn-secondary">Назад</button>
+
+  <p *ngIf="event.available_tickets === 0" class="sold-out">❌ Все билеты проданы!</p>
+</div>
+
+
       <!-- Форма для добавления отзыва -->
       <!-- <div class="review-form">
         <input type="text" [(ngModel)]="newReview" placeholder="Оставьте свой отзыв..." />
@@ -24,5 +32,4 @@
         </ul>
       </div>
     </div> -->
-  </div>
   
