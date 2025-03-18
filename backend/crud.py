@@ -113,3 +113,7 @@ def change_user_password(db: Session, user_id: int, old_password: str, new_passw
     db.commit()
     db.refresh(user)
     return {"message": "Пароль успешно изменен"}
+
+def get_user_by_email(db: Session, email: str):
+    print(f"Поиск пользователя с email: {email}")
+    return db.query(models.User).filter(models.User.email == email).first()

@@ -12,7 +12,8 @@ from backend.models import User
 from fastapi.middleware.cors import CORSMiddleware
 from backend.auth import router as auth_router  
 from pydantic import BaseModel
-
+from backend.models import User  # Убедись, что модель User импортирована
+from backend.auth import get_current_user  # Функция для аутентификации
 # Создаем приложение FastAPI
 app = FastAPI()
 
@@ -144,13 +145,16 @@ origins = [
     "http://localhost:4200",  # Angular
 ]
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Разрешенные источники
+    allow_origins=["http://localhost:4200"],  # Разрешаем запросы от фронтенда
     allow_credentials=True,
-    allow_methods=["*"],  # Разрешаем все методы (GET, POST и т. д.)
+    allow_methods=["*"],  # Разрешаем все методы (GET, POST и т.д.)
     allow_headers=["*"],  # Разрешаем все заголовки
 )
+
 
 @router.get("/users/me")
 def get_current_user_data(current_user: User = Depends(get_current_user)):
@@ -182,7 +186,13 @@ def get_profile(current_user: models.User = Depends(get_current_user)):
     return current_user
 
 
-
+@app.get("/auth/profile")
+def get_profile(current_user: User = Depends(get_current_user)):
+    return {
+        "id": current_user.id,  # Добавляем ID
+        "email": current_user.email,
+        "name": current_user.username
+    }
 
 if __name__ == "__main__":
     import uvicorn

@@ -13,7 +13,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     is_admin = Column(Boolean, default=False)
-
+    
     tickets = relationship("Ticket", back_populates="user")
 
 # Таблица событий
