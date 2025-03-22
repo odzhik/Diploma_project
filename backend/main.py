@@ -15,11 +15,15 @@ from pydantic import BaseModel
 from backend.models import User  # Убедись, что модель User импортирована
 from backend.auth import get_current_user  # Функция для аутентификации
 import psycopg2
+import os
+import time
+from sqlalchemy import create_engine
+from sqlalchemy.exc import OperationalError
 # Создаем приложение FastAPI
 app = FastAPI()
 
 router = APIRouter()
-
+DATABASE_URL = "postgresql://postgres:1234@db:5432/event_platform"
 # Подключаем маршруты авторизации
 
 app.include_router(auth_router, prefix="/auth")
@@ -34,6 +38,22 @@ app.include_router(events.router)
 print("Маршрут /tickets загружается...")
 app.include_router(tickets.router)
 
+def wait_for_db():
+    retries = 10  # Количество попыток подключения
+    while retries > 0:
+        try:
+            engine = create_engine(DATABASE_URL)
+            with engine.connect():
+                print("✅ Database is ready!")
+                return
+        except OperationalError:
+            print("⏳ Waiting for database to start...")
+            time.sleep(5)  # Подождать 5 секунд
+            retries -= 1
+    print("❌ Could not connect to the database!")
+    exit(1)  # Завершаем процесс, если БД так и не поднялась
+
+wait_for_db()
 
 # Функция для получения сессии БД
 def get_db():
@@ -196,11 +216,11 @@ def get_profile(current_user: User = Depends(get_current_user)):
     }
  # Покупка билета
 conn = psycopg2.connect(
-    dbname="event_platform",
-    user="postgres",
-    password="1234",
-    host="localhost",
-    port="5432"
+    dbname=os.getenv("DB_NAME", "event_platform"),
+    user=os.getenv("DB_USER", "postgres"),
+    password=os.getenv("DB_PASSWORD", "1234"),
+    host=os.getenv("DB_HOST", "db"),  # Используем "db" вместо "localhost"
+    port=os.getenv("DB_PORT", "5432")
 )
 cursor = conn.cursor()
 class TicketRequest(BaseModel):
@@ -233,4 +253,4 @@ async def buy_ticket(request: TicketRequest):
     return {"message": f"Билет на событие {request.event_id} куплен пользователем {request.user_id}"}
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

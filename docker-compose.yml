@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: event_recommendation_platform-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: event_platform
+    volumes:
+      - pgdata:/var/lib/postgresql/data  # Храним БД
+    ports:
+      - "5432:5432"
+    networks:
+      - custom_network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: event_recommendation_platform-backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_USER: "postgres"
+      DB_PASSWORD: "1234"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_NAME: "event_platform"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - custom_network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  custom_network:
+    driver: bridge
